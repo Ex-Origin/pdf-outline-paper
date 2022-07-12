@@ -155,6 +155,7 @@ def main(file_path:str):
     titles = []
     for text in tmp:
         if(text.is_title()):
+            text.content = text.content.title()
             titles += [text]
 
     print('')
