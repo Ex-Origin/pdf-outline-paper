@@ -187,7 +187,7 @@ def main(file_path:str):
 
     f = open('tmp.pdf', 'wb')
     writer.write(f)
-    f.close
+    f.close()
 
     os.rename('tmp.pdf', file_path)
 
