@@ -140,14 +140,14 @@ def main(file_path:str):
             if(not (previous_text.get_type() == 'section' and previous_text == text)):
                 titles.append(text)
             else:
-                titles[-1].content += text.content
+                titles[-1].content += ' ' + text.content
         
         elif(subsection and subsection == text):
             text.set_type('subsection')
             if(not (previous_text.get_type() == 'subsection' and previous_text == text)):
                 titles.append(text)
             else:
-                titles[-1].content += text.content
+                titles[-1].content += ' ' + text.content
 
         previous_text = text
 
