@@ -22,7 +22,6 @@ def get_text_info(file_path:str) -> list:
                     right_content += element.get_text()
         i += 1
         result += [left_content + right_content]
-        open('text.txt', 'w').write(left_content + right_content)
 
     return result
 
