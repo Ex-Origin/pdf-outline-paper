@@ -96,7 +96,7 @@ def main(file_path:str):
 
             head += len('\n' + subsection)
             tail = contents[i].find('\n', head)
-            title = subsection + contents[i][head: tail].title()
+            title = subsection + contents[i][head: tail].strip()
             page_num = get_page(pages_len, count_len + head)
             writer.add_bookmark(title, page_num, parent=sections[i])
         count_len += len(contents[i])

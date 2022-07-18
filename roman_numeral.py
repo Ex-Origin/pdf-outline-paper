@@ -66,16 +66,16 @@ def main(file_path:str):
     pre_head = 0
     for section in section_table:
         head = content.find('\n' + section, pre_head)
-        if(head == -1):
-            break
+            if(head == -1):
+                break
 
-        head += len('\n' + section)
-        tail = content.find('\n', head)
+            head += len('\n' + section)
+            tail = content.find('\n', head)
         title = section + content[head: tail].title()
-        page_num = get_page(pages_len, head)
-        sections += [writer.add_bookmark(title, page_num, parent=None)]
-        contents += [content[pre_head: head]]
-        pre_head = head
+                page_num = get_page(pages_len, head)
+                sections += [writer.add_bookmark(title, page_num, parent=None)]
+                contents += [content[pre_head: head]]
+                pre_head = head
 
     count_len = len(contents.pop(0))
     contents += [content[pre_head: -1]]
@@ -89,7 +89,7 @@ def main(file_path:str):
 
             head += len('\n' + subsection)
             tail = contents[i].find('\n', head)
-            title = subsection + contents[i][head: tail].title()
+            title = subsection + contents[i][head: tail].strip()
             page_num = get_page(pages_len, count_len + head)
             writer.add_bookmark(title, page_num, parent=sections[i])
         count_len += len(contents[i])
