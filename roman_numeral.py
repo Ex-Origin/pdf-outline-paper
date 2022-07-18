@@ -32,16 +32,16 @@ def get_page(pages_len, pi):
     return -1
 
 def main(file_path:str):
-    section_table = [   'I.', 'II.', 'III.', 'IV.', 
-                        'V.', 'VI.', 'VII.', 'VIII.', 
-                        'IX.', 'X.', 'XI.', 'XII.', 
-                        'XIII.', 'XIV.', 'XV.', 'XVI.', 
-                        'XVII.', 'XVIII.', 'XIX.', 'XX.']
-    subsection_table = ['A.', 'B.', 'C.', 'D.', 
-                        'E.', 'F.', 'G.', 'H.', 
-                        'I.', 'J.', 'K.', 'L.', 
-                        'M.', 'N.', 'O.', 'P.', 
-                        'Q.', 'R.', 'S.', 'T.']
+    section_table = [   'I. ', 'II. ', 'III. ', 'IV. ', 
+                        'V. ', 'VI. ', 'VII. ', 'VIII. ', 
+                        'IX. ', 'X. ', 'XI. ', 'XII. ', 
+                        'XIII. ', 'XIV. ', 'XV. ', 'XVI. ', 
+                        'XVII. ', 'XVIII. ', 'XIX. ', 'XX. ']
+    subsection_table = ['A. ', 'B. ', 'C. ', 'D. ', 
+                        'E. ', 'F. ', 'G. ', 'H. ', 
+                        'I. ', 'J. ', 'K. ', 'L. ', 
+                        'M. ', 'N. ', 'O. ', 'P. ', 
+                        'Q. ', 'R. ', 'S. ', 'T. ']
 
     reader = PdfReader(file_path)
 
@@ -65,16 +65,22 @@ def main(file_path:str):
 
     pre_head = 0
     for section in section_table:
-        head = content.find('\n' + section, pre_head)
+        find = False
+        head = pre_head
+        while(find == False):
+            head = content.find('\n' + section, head)
             if(head == -1):
                 break
 
             head += len('\n' + section)
             tail = content.find('\n', head)
-        title = section + content[head: tail].title()
+            title = content[head: tail].strip()
+            if(title.isupper()):
+                title = section + title.title()
                 page_num = get_page(pages_len, head)
                 sections += [writer.add_bookmark(title, page_num, parent=None)]
                 contents += [content[pre_head: head]]
+                find = True
                 pre_head = head
 
     count_len = len(contents.pop(0))

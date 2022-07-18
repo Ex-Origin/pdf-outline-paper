@@ -74,9 +74,9 @@ def main(file_path:str):
 
             head += len('\n' + section)
             tail = content.find('\n', head)
-            title = section + content[head: tail].strip()
+            title = content[head: tail].strip()
             if(title.isupper()):
-                title = title.title()
+                title = section + title.title()
                 page_num = get_page(pages_len, head)
                 sections += [writer.add_bookmark(title, page_num, parent=None)]
                 contents += [content[pre_head: head]]
