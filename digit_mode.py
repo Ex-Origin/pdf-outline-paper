@@ -5,6 +5,7 @@ from pdfminer.layout import LTTextContainer
 from PyPDF2 import PdfReader, PdfFileWriter
 import os
 import sys
+import string
 
 def get_text_info(file_path:str) -> list:
     result = []
@@ -30,6 +31,18 @@ def get_page(pages_len, pi):
         if(pi < pages_len[i]):
             return i - 1
     return -1
+
+def check_title(text:str)->bool:
+    check_str = ''
+    enable_strings = string.ascii_letters + string.digits + '.- '
+    for chr in text:
+        if(chr not in enable_strings):
+            check_str += chr
+    
+    if(not check_str):
+        return True
+    else:
+        return False
 
 def main(file_path:str):
     section_table = [   '1 ', '2 ', '3 ', '4 ', 
@@ -75,8 +88,12 @@ def main(file_path:str):
             head += len('\n' + section)
             tail = content.find('\n', head)
             title = content[head: tail].strip()
-            if(title.isupper()):
-                title = section + title.title()
+
+            if(check_title(title)):
+                if(title.isupper()):
+                    title = title.title()
+
+                title = section + title
                 page_num = get_page(pages_len, head)
                 sections += [writer.add_bookmark(title, page_num, parent=None)]
                 contents += [content[pre_head: head]]
@@ -97,6 +114,8 @@ def main(file_path:str):
             head += len('\n' + subsection)
             tail = contents[i].find('\n', head)
             title = subsection + contents[i][head: tail].strip()
+            if(title.isupper()):
+                title = title.title()
             page_num = get_page(pages_len, count_len + head)
             writer.add_bookmark(title, page_num, parent=sections[i])
         count_len += len(contents[i])
