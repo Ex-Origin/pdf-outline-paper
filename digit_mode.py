@@ -67,7 +67,7 @@ def main(file_path:str):
     pages_len = [0]
     for page in pages:
         pages_len += [pages_len[-1] + len(page)]
-    content = ''.join(pages)
+    content = '\n' + ''.join(pages) + '\n'
 
     writer = PdfFileWriter()
     for i in range(len(reader.pages)):
