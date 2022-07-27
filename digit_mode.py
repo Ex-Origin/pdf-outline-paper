@@ -34,7 +34,7 @@ def get_page(pages_len, pi):
 
 def check_title(text:str)->bool:
     check_str = ''
-    enable_strings = string.ascii_letters + string.digits + '.- '
+    enable_strings = string.ascii_letters + string.digits + ':.- '
     for chr in text:
         if(chr not in enable_strings):
             check_str += chr
